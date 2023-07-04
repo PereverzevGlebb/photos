@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -12,22 +13,43 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photos.base.ui.BaseFragment
 import com.example.photos.databinding.FragmentCameraBinding
+import com.example.photos.ui.edit_photo.FilterAdapter
+import com.example.photos.utils.applyFilter
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class CameraFragment : BaseFragment<FragmentCameraBinding>(
     FragmentCameraBinding::inflate
 ) {
 
+    private var photoUri: Uri? = null
     private var imageCapture: ImageCapture? = null
     private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
 
+    private var analyzerExecutor: ExecutorService by Delegates.notNull()
+
+    private var filterImageAnalyzer: FilterImageAnalyzer by Delegates.notNull()
+
+    private val filterAdapter by lazy {
+        FilterAdapter {
+            filterImageAnalyzer.currentFilter = it
+        }
+    }
 
     private val permissionResultLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -39,9 +61,20 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        analyzerExecutor = Executors.newSingleThreadExecutor()
+        filterImageAnalyzer = FilterImageAnalyzer(binding.viewFinder)
         checkCameraPermissions()
         setupClickListeners()
+        setupFilterList()
+    }
+
+    override fun onDestroyView() {
+        analyzerExecutor.shutdown()
+        super.onDestroyView()
+    }
+    private fun setupFilterList() = with(binding.rvFilters) {
+        adapter = filterAdapter
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setupClickListeners() = with(binding) {
@@ -51,7 +84,6 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
         cameraSwitchButton.setOnClickListener {
             switchLens()
         }
-
     }
 
     private fun checkCameraPermissions() {
@@ -89,14 +121,11 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
+        val imageAnalysis = ImageAnalysis.Builder().setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST).build()
+        imageAnalysis.setAnalyzer(analyzerExecutor, filterImageAnalyzer)
+
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-                }
 
             imageCapture = ImageCapture.Builder()
                 .build()
@@ -107,7 +136,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
                 cameraProvider.unbindAll()
 
                 cameraProvider.bindToLifecycle(
-                    viewLifecycleOwner, cameraSelector, preview, imageCapture
+                    viewLifecycleOwner, cameraSelector, imageCapture, imageAnalysis
                 )
 
             } catch (exc: Exception) {
@@ -126,8 +155,10 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
         startCamera()
     }
 
+
     private fun savePhotoToGallery(image: ImageProxy) {
         val bitmap = image.toBitmap()
+            .applyFilter(filterImageAnalyzer.currentFilter.matrix)
 
         val displayName = "photo_${System.currentTimeMillis()}.jpg"
 
@@ -141,6 +172,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
 
         val resolver = requireActivity().contentResolver
         val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        photoUri = uri
 
         uri?.let { photoUri ->
             try {
@@ -155,6 +187,10 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
                 e.printStackTrace()
             }
         }
+
+        findNavController().navigate(
+            CameraFragmentDirections.actionCameraFragmentToEditPhotoFragment(uri.toString())
+        )
 
         bitmap.recycle()
     }

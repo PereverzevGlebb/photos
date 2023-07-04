@@ -1,6 +1,5 @@
 package com.example.photos.di
 
-import com.example.photos.BuildConfig
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -19,10 +18,9 @@ import javax.inject.Singleton
 class NetworkModule {
     @Provides
     fun provideLoggerInterceptor() = HttpLoggingInterceptor().apply {
-        level = if(BuildConfig.DEBUG)
-            HttpLoggingInterceptor.Level.BODY
-        else
-            HttpLoggingInterceptor.Level.NONE
+        level = HttpLoggingInterceptor.Level.BODY
+        //else
+          //  HttpLoggingInterceptor.Level.NONE
     }
 
     @Provides
