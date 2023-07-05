@@ -26,6 +26,7 @@ class FilterAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: FilterMatrix) = with(binding) {
+            filterTitle.text = item.title
             val filterBitmap =
                 BitmapFactory.decodeResource(itemView.resources, R.drawable.ic_new_filter_preview)
                     .applyFilter(item.matrix)

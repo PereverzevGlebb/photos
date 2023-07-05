@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photos.R
@@ -24,6 +25,7 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
 
     private var selectedImageUri: Uri? = null
 
+    private var isAllFabsVisible = false
 
     private val permissionResultLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -56,20 +58,52 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
         setupUI()
     }
 
+    private fun openFloatingPhotoActions() = with(binding) {
+        openFab.setOnClickListener {
+            checkActionButtons()
+        }
+    }
+
+    private fun checkActionButtons() = with(binding) {
+        if (!isAllFabsVisible) {
+            showActionButtons()
+        } else {
+            hideActionButtons()
+        }
+    }
+
+    fun showActionButtons() = with(binding) {
+        makeNewPhotoFab.show()
+        photoFromGalleryFab.show()
+        actionsButtonGroup.isVisible = true
+
+        isAllFabsVisible = true
+    }
+
+    private fun hideActionButtons() = with(binding) {
+        makeNewPhotoFab.hide()
+        photoFromGalleryFab.hide()
+        actionsButtonGroup.isVisible = false
+
+        isAllFabsVisible = false
+    }
+
     private fun setupUI() {
         setupRecyclerView()
+        hideActionButtons()
         setupMakePhotoButton()
         setupGetPhotoFromGalleryButton()
+        openFloatingPhotoActions()
     }
 
     private fun setupMakePhotoButton() = with(binding) {
-        makePhotoBtn.setOnClickListener {
+        makePhotoActionText.setOnClickListener {
             findNavController().navigate(R.id.cameraFragment)
         }
     }
 
     private fun setupGetPhotoFromGalleryButton() = with(binding) {
-        getPhotoBtn.setOnClickListener {
+        photoFromGalleryFab.setOnClickListener {
             checkReadExternalStoragePermissions()
         }
     }
