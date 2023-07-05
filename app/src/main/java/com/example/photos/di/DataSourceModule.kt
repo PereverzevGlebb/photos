@@ -1,5 +1,7 @@
 package com.example.photos.di
 
+import com.example.photos.datasource.local.ContentResolverDataSource
+import com.example.photos.datasource.local.ContentResolverDataSourceImpl
 import com.example.photos.datasource.remote.UnsplashRemoteDataSource
 import com.example.photos.datasource.remote.UnsplashRemoteDataSourceImpl
 import dagger.Binds
@@ -13,4 +15,7 @@ interface DataSourceModule {
 
     @Binds
     fun bindsExampleDataSource(impl: UnsplashRemoteDataSourceImpl): UnsplashRemoteDataSource
+
+    @Binds
+    fun bindsContentResolverDataSource(impl: ContentResolverDataSourceImpl): ContentResolverDataSource
 }

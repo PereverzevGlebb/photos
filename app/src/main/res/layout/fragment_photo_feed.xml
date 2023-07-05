@@ -13,6 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/ic_plus"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +100,39 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Get photo from unsplash"
+        app:layout_constraintBottom_toBottomOf="@+id/photo_from_unsplash_fab"
         app:layout_constraintEnd_toStartOf="@+id/photo_from_unsplash_fab"
-        app:layout_constraintTop_toTopOf="@+id/photo_from_unsplash_fab"
-        app:layout_constraintBottom_toBottomOf="@+id/photo_from_unsplash_fab" />
+        app:layout_constraintTop_toTopOf="@+id/photo_from_unsplash_fab" />
+
+    <TextView
+        android:id="@+id/error_feed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/photo_feed_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/empty_feed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

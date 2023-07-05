@@ -1,8 +1,7 @@
-package com.example.photos.ui.dashboard
+package com.example.photos.ui.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +10,10 @@ import com.example.photos.R
 import com.example.photos.databinding.PhotoItemBinding
 import com.example.photos.domain.entity.PhotoModel
 
-class UnsplashFeedAdapter(
-    private val onPhotoClick: (PhotoModel) -> Unit
-) : ListAdapter<PhotoModel, UnsplashFeedAdapter.ViewHolder>(DiffUtilsCallback) {
+class PhotoFeedAdapter(
+    private val onPhotoClick: (PhotoModel) -> Unit,
+    private val onShareClick: (PhotoModel) -> Unit
+) : ListAdapter<PhotoModel, PhotoFeedAdapter.ViewHolder>(DiffUtilsCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(PhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -35,7 +35,9 @@ class UnsplashFeedAdapter(
 
             root.setOnClickListener {
                 onPhotoClick(item)
-                Toast.makeText(binding.root.context, "Will be opened", Toast.LENGTH_SHORT).show()
+            }
+            btnShare.setOnClickListener {
+                onShareClick(item)
             }
         }
     }

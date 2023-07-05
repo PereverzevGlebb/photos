@@ -6,11 +6,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetPhotosUseCase @Inject constructor(
-    private val photosRepository: PhotosRepository,
+class GetPhotosFromDirectoryUseCase @Inject constructor(
+    private val repository: PhotosRepository,
     @IODispatcher
     private val dispatcher: CoroutineDispatcher
 ) {
-    operator fun invoke() =
-        photosRepository.getPhotos().flowOn(dispatcher)
+
+    operator fun invoke() = repository.getPhotoFromDirectory().flowOn(dispatcher)
 }

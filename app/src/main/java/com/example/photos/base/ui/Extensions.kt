@@ -1,5 +1,7 @@
 package com.example.photos.base.ui
 
+import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,4 +21,21 @@ inline fun <reified T> Fragment.collect(
             }
         }
     }
+}
+
+fun Fragment.sharePhoto(imageUri: Uri) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "image/jpeg"
+        putExtra(Intent.EXTRA_STREAM, imageUri)
+    }
+    startActivity(Intent.createChooser(shareIntent, "Share by"))
+}
+
+fun Fragment.shareLink(url: String) {
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "text/plain"
+    intent.putExtra(
+        Intent.EXTRA_TEXT, url
+    )
+    startActivity(Intent.createChooser(intent, "Share by"))
 }

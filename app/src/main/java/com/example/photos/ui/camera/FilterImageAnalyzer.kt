@@ -14,9 +14,10 @@ class FilterImageAnalyzer(
     var currentFilter = FilterMatrix.ORIGINAL
 
     override fun analyze(image: ImageProxy) {
+
         val bitmap = image
             .toBitmap()
-            .rotate(90f)
+            .rotate(image.imageInfo.rotationDegrees.toFloat())
             .applyFilter(currentFilter.matrix)
         preview.post {
             preview.setImageBitmap(bitmap)

@@ -1,6 +1,6 @@
 package com.example.photos.di
 
-import com.example.photos.datasource.UnsplashApi
+import com.example.photos.datasource.remote.UnsplashApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.example.photos.ui.edit_photo
+package com.example.photos.ui.common
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photos.R
 import com.example.photos.databinding.FilterItemBinding
+import com.example.photos.ui.edit_photo.FilterMatrix
 import com.example.photos.utils.applyFilter
 
 class FilterAdapter(
