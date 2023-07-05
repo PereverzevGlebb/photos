@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/filterPreview"
+        android:id="@+id/filter_preview"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
@@ -15,7 +15,7 @@
         tools:src="@drawable/ic_new_filter_preview" />
 
     <TextView
-        android:id="@+id/filterTitle"
+        android:id="@+id/filter_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

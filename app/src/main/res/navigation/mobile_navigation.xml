@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/photoFeedFragment"
         android:name="com.example.photos.ui.photo_feed.PhotoFeedFragment"
-        android:label="PhotoFeed"
+        android:label="@string/photo_feed_title"
         tools:layout="@layout/fragment_photo_feed">
         <action
             android:id="@+id/action_openSelectedPhoto"
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.photos.ui.camera.CameraFragment"
-        android:label="@string/title_home"
+        android:label="@string/camera_title"
         tools:layout="@layout/fragment_camera" >
         <action
             android:id="@+id/action_cameraFragment_to_editPhotoFragment"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/unsplashFragment"
         android:name="com.example.photos.ui.dashboard.UnsplashPhotosFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/unsplash_title"
         tools:layout="@layout/fragment_unsplash_feed" >
         <action
             android:id="@+id/action_unsplashFragment_to_editPhotoFragment"
@@ -44,6 +44,7 @@
     <fragment
         android:id="@+id/editPhotoFragment"
         android:name="com.example.photos.ui.edit_photo.EditPhotoFragment"
+        android:label="@string/edit_photo_title"
         tools:layout="@layout/fragment_edit_photo">
         <argument
             android:name="selectedImageUri"
