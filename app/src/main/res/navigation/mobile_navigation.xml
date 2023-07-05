@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_openSelectedPhoto"
             app:destination="@id/editPhotoFragment"/>
+        <action
+            android:id="@+id/action_photoFeedFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_photoFeedFragment_to_unsplashFragment"
+            app:destination="@id/unsplashFragment" />
     </fragment>
 
     <fragment
@@ -26,10 +32,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.photos.ui.dashboard.DashboardFragment"
+        android:id="@+id/unsplashFragment"
+        android:name="com.example.photos.ui.dashboard.UnsplashPhotosFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_unsplash_feed" >
+        <action
+            android:id="@+id/action_unsplashFragment_to_editPhotoFragment"
+            app:destination="@id/editPhotoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/editPhotoFragment"

@@ -1,6 +1,6 @@
 package com.example.photos.di
 
-import com.example.photos.datasource.ExampleApi
+import com.example.photos.datasource.UnsplashApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import retrofit2.Retrofit
 class ApiModule {
 
     @Provides
-    fun provideExampleApi(retrofit: Retrofit) = retrofit.create(ExampleApi::class.java)
+    fun provideExampleApi(retrofit: Retrofit) = retrofit.create(UnsplashApi::class.java)
 
 }

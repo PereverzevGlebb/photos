@@ -1,7 +1,7 @@
 package com.example.photos.di
 
-import com.example.photos.repository.example.ExampleRepository
-import com.example.photos.repository.example.ExampleRepositoryImpl
+import com.example.photos.repository.unsplash.UnsplashRepository
+import com.example.photos.repository.unsplash.UnsplashRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun bindsExampleRepository(impl: ExampleRepositoryImpl): ExampleRepository
+    fun bindsExampleRepository(impl: UnsplashRepositoryImpl): UnsplashRepository
 }

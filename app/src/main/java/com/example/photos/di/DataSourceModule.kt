@@ -1,7 +1,7 @@
 package com.example.photos.di
 
-import com.example.photos.datasource.remote.ExampleRemoteDataSource
-import com.example.photos.datasource.remote.ExampleRemoteDataSourceImpl
+import com.example.photos.datasource.remote.UnsplashRemoteDataSource
+import com.example.photos.datasource.remote.UnsplashRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface DataSourceModule {
 
     @Binds
-    fun bindsExampleDataSource(impl: ExampleRemoteDataSourceImpl): ExampleRemoteDataSource
+    fun bindsExampleDataSource(impl: UnsplashRemoteDataSourceImpl): UnsplashRemoteDataSource
 }

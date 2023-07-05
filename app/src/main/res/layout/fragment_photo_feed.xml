@@ -59,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:constraint_referenced_ids="get_from_gallery_action_text, make_photo_action_text" />
+        app:constraint_referenced_ids="get_from_gallery_action_text, make_photo_action_text, get_from_unsplash_action_text" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/photo_from_gallery_fab"
@@ -81,4 +81,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/photo_from_gallery_fab"
         app:layout_constraintEnd_toStartOf="@+id/photo_from_gallery_fab"
         app:layout_constraintTop_toTopOf="@+id/photo_from_gallery_fab" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/photo_from_unsplash_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/photo_from_gallery_fab"
+        app:layout_constraintEnd_toEndOf="@+id/make_new_photo_fab"
+        app:layout_constraintStart_toStartOf="@+id/make_new_photo_fab"
+        app:srcCompat="@drawable/ic_add_photo" />
+
+    <TextView
+        android:id="@+id/get_from_unsplash_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Get photo from unsplash"
+        app:layout_constraintEnd_toStartOf="@+id/photo_from_unsplash_fab"
+        app:layout_constraintTop_toTopOf="@+id/photo_from_unsplash_fab"
+        app:layout_constraintBottom_toBottomOf="@+id/photo_from_unsplash_fab" />
 </androidx.constraintlayout.widget.ConstraintLayout>

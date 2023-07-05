@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photos.R
 import com.example.photos.base.ui.BaseFragment
 import com.example.photos.databinding.FragmentPhotoFeedBinding
+import com.example.photos.ui.dashboard.UnsplashFeedAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,8 +49,8 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
             }
         }
 
-    private val photoFeedAdapter by lazy {
-        PhotoFeedAdapter()
+    private val unsplashFeedAdapter by lazy {
+        UnsplashFeedAdapter{}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,9 +73,10 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
         }
     }
 
-    fun showActionButtons() = with(binding) {
+    private fun showActionButtons() = with(binding) {
         makeNewPhotoFab.show()
         photoFromGalleryFab.show()
+        photoFromUnsplashFab.show()
         actionsButtonGroup.isVisible = true
 
         isAllFabsVisible = true
@@ -83,6 +85,7 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
     private fun hideActionButtons() = with(binding) {
         makeNewPhotoFab.hide()
         photoFromGalleryFab.hide()
+        photoFromUnsplashFab.hide()
         actionsButtonGroup.isVisible = false
 
         isAllFabsVisible = false
@@ -93,6 +96,7 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
         hideActionButtons()
         setupMakePhotoButton()
         setupGetPhotoFromGalleryButton()
+        navigateToUnsplashFeedFragment()
         openFloatingPhotoActions()
     }
 
@@ -108,8 +112,14 @@ class PhotoFeedFragment : BaseFragment<FragmentPhotoFeedBinding>(
         }
     }
 
+    private fun navigateToUnsplashFeedFragment() = with(binding) {
+        photoFromUnsplashFab.setOnClickListener {
+            findNavController().navigate(R.id.unsplashFragment)
+        }
+    }
+
     private fun setupRecyclerView() = with(binding) {
-        rvPhotoFeed.adapter = photoFeedAdapter
+        rvPhotoFeed.adapter = unsplashFeedAdapter
         rvPhotoFeed.layoutManager = GridLayoutManager(context, 2)
     }
 

@@ -13,11 +13,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private const val API_BASE_URL = "https://api.unsplash.com/"
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @Provides
     fun provideLoggerInterceptor() = HttpLoggingInterceptor().apply {
+
         level = HttpLoggingInterceptor.Level.BODY
         //else
           //  HttpLoggingInterceptor.Level.NONE
@@ -31,8 +33,9 @@ class NetworkModule {
     fun providesOkHttpClient(
         loggerInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient = OkHttpClient.Builder()
-        .callTimeout(10, TimeUnit.SECONDS)
+        .callTimeout(30, TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
+        .addInterceptor(loggerInterceptor)
         .build()
 
     @Singleton
@@ -41,7 +44,7 @@ class NetworkModule {
         okHttpClient: OkHttpClient,
         moshi: Moshi,
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("https://examle.com")
+        .baseUrl(API_BASE_URL)
         .client(okHttpClient)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
