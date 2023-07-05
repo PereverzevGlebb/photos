@@ -1,7 +1,6 @@
 package com.example.photos.ui.edit_photo
 
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.photos.R
 import com.example.photos.base.ui.BaseFragment
+import com.example.photos.base.ui.setNavigationOnClickListenerWithBackNavigation
 import com.example.photos.databinding.FragmentEditPhotoBinding
 import com.example.photos.ui.common.FilterAdapter
 import com.example.photos.utils.BitmapLoader
@@ -36,8 +36,6 @@ class EditPhotoFragment : BaseFragment<FragmentEditPhotoBinding>(
 
     private var filteredBitmap: Bitmap? = null
 
-    private var imageUriForSharing: Uri? = null
-
     private val filterAdapter by lazy {
         FilterAdapter {
             filteredBitmap = startedBitmap?.applyFilter(it.matrix)
@@ -50,6 +48,7 @@ class EditPhotoFragment : BaseFragment<FragmentEditPhotoBinding>(
         setupMenu()
         setupFilterList()
         loadBitmap()
+        binding.topToolBar.setNavigationOnClickListenerWithBackNavigation()
     }
 
     private fun loadBitmap() {

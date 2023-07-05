@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photos.base.ui.BaseFragment
 import com.example.photos.base.ui.collect
+import com.example.photos.base.ui.setNavigationOnClickListenerWithBackNavigation
 import com.example.photos.base.ui.shareLink
 import com.example.photos.databinding.FragmentUnsplashFeedBinding
 import com.example.photos.ui.common.PhotoFeedAdapter
@@ -40,6 +41,8 @@ class UnsplashPhotosFragment : BaseFragment<FragmentUnsplashFeedBinding>(
 
         setupRecyclerView()
         setupObservers()
+        binding.topToolBar.setNavigationOnClickListenerWithBackNavigation()
+
     }
 
     private fun setupRecyclerView() = with(binding.rvUnsplash) {

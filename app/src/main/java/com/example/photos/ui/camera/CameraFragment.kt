@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photos.base.ui.BaseFragment
 import com.example.photos.base.ui.collect
+import com.example.photos.base.ui.setNavigationOnClickListenerWithBackNavigation
 import com.example.photos.databinding.FragmentCameraBinding
 import com.example.photos.ui.common.FilterAdapter
 import com.example.photos.utils.applyFilter
@@ -101,6 +102,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(
         cameraSwitchButton.setOnClickListener {
             switchLens()
         }
+        topToolBar.setNavigationOnClickListenerWithBackNavigation()
     }
 
     private fun checkCameraPermissions() {

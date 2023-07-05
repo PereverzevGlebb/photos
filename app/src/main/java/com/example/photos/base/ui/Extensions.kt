@@ -2,10 +2,12 @@ package com.example.photos.base.ui
 
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -38,4 +40,10 @@ fun Fragment.shareLink(url: String) {
         Intent.EXTRA_TEXT, url
     )
     startActivity(Intent.createChooser(intent, "Share by"))
+}
+
+fun Toolbar.setNavigationOnClickListenerWithBackNavigation() {
+    setNavigationOnClickListener {
+        findNavController().popBackStack()
+    }
 }
